@@ -1,34 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React from 'react';
+import {BrowserRouter as Router,Route,Routes,Link} from 'react-router-dom'
 import './App.css'
-
+import ProductListing from './components/ProductListing';
+import OrderManagement from './components/OrderManagement';
+import StatisticsDashboard from './components/StatisticsDashboard';
+import AddProductForm from './components/AddProductForm';
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Router>
+      <div className='dashboard'>
+        <Sidebar/>
+        <div className='main-content'>
+          <Routes>
+            <Route path='/products' element={<ProductListing/>}/>
+            <Route path='/orders' element={<OrderManagement/>}/>
+            <Route path='/add-product' element={<AddProductForm/>}/>
+            <Route path='/stats' element={<StatisticsDashboard/>}/>
+            <Route path='/' element={<ProductListing/>}/>
+          </Routes>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </Router>
+  )
+}
+
+function Sidebar(){
+  return (
+    <div className='sidebar'>
+      <h2>Admin Dashboard</h2>
+      <nav>
+        <ul>
+          <li><Link to='/products'>Products</Link></li>
+          <li><Link to='/orders'>Orders</Link></li>
+          <li><Link to='/stats'>Statistics</Link></li>
+          <li><Link to ='/add-product'>Add Product</Link></li>
+        </ul>
+      </nav>
+    </div>
   )
 }
 
